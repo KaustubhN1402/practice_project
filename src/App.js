@@ -1,12 +1,28 @@
 import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
+import Home from "./components/Pagess/Home"
+import About from "./components/Pagess/About";
+import Services from "./components/Pagess/Services";
+import Contact from "./components/Pagess/Contact";
 
 const App = () => {
-  return(
-    <div className="overflow-x-hidden">
-      <Navbar/>
-    </div>
-  )
+  return (
+    <Router>
+      <div className="overflow-x-hidden">
+        <Navbar />
+
+        <div className="container mx-auto mt-10">
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/services" element={<Services />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
+        </div>
+      </div>
+    </Router>
+  );
 };
 
 export default App;
