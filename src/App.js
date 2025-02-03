@@ -6,6 +6,7 @@ import About from "./components/Pagess/About";
 import Services from "./components/Pagess/Services";
 import Contact from "./components/Pagess/Contact";
 import Footer from "./components/Footer/Footer";
+import Login from "./components/Pagess/Login";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
             <Route path="/about" element={<About />} />
             <Route path="/services" element={<Services />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/Login" element={<Login />} />
           </Routes>
         </div>
         <Footer/>

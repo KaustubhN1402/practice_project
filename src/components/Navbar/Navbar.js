@@ -1,15 +1,13 @@
 import React, { useState } from "react";
-import { CiSearch } from "react-icons/ci";
 import { GiFarmer } from "react-icons/gi";
-import { MdAccountCircle, MdMenu, MdClose } from "react-icons/md";
+import { MdMenu, MdClose } from "react-icons/md";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
-  const [open, setOpen] = useState(false); 
+  const [open, setOpen] = useState(false);
 
   return (
     <>
-      
       <nav className="fixed top-0 left-0 w-full bg-gray-900 shadow-md z-50">
         <div className="container flex justify-between items-center py-4 px-6">
           {/* Leftmost - Logo Section */}
@@ -49,15 +47,16 @@ const Navbar = () => {
 
           {/* Rightmost - Icons Section */}
           <div className="flex items-center gap-4">
-            <button className="text-white text-2xl hover:bg-primary hover:text-white rounded-full p-2 transition-all duration-200">
-              <CiSearch />
-            </button>
-            <button className="text-white text-2xl hover:bg-primary hover:text-white rounded-full p-2 transition-all duration-200">
-              <MdAccountCircle />
-            </button>
-            <button className="hidden md:block hover:bg-primary text-white font-semibold rounded-md border-2 border-white px-6 py-2 transition-all duration-200">
-              Login
-            </button>
+            <Link to="/login">
+              <button className="hidden md:block hover:bg-primary text-white font-semibold rounded-md border-2 border-white px-6 py-2 transition-all duration-200">
+                Login
+              </button>
+            </Link>
+            <Link to="/signup">
+              <button className="hidden md:block hover:bg-primary text-white font-semibold rounded-md border-2 border-white px-6 py-2 transition-all duration-200">
+                Signup
+              </button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -73,9 +72,7 @@ const Navbar = () => {
         {/* Mobile Dropdown Menu */}
         <div
           className={`md:hidden fixed top-16 left-0 w-full bg-white shadow-lg py-6 transition-all duration-300 ${
-            open
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 -translate-y-10 hidden"
+            open ? "opacity-100 translate-y-0" : "opacity-0 -translate-y-10 hidden"
           }`}
         >
           <ul className="flex flex-col items-center gap-6 text-black text-lg">
@@ -113,6 +110,24 @@ const Navbar = () => {
                 onClick={() => setOpen(false)}
               >
                 Contact
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/login"
+                className="hover:text-primary duration-200"
+                onClick={() => setOpen(false)}
+              >
+                Login
+              </Link>
+            </li>
+            <li>
+              <Link
+                to="/signup"
+                className="hover:text-primary duration-200"
+                onClick={() => setOpen(false)}
+              >
+                Signup
               </Link>
             </li>
           </ul>

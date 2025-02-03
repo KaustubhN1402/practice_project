@@ -23,7 +23,7 @@ const Contact = () => {
   };
 
   return (
-    <div className="contact-container bg-gray-50 py-20">
+    <div className="contact-container bg-gray-100 py-20">
       {/* Contact Header */}
       <section className="contact-header text-center px-4">
         <h1 className="text-4xl font-bold text-primary">
