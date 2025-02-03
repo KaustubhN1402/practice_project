@@ -5,6 +5,7 @@ import Home from "./components/Pagess/Home"
 import About from "./components/Pagess/About";
 import Services from "./components/Pagess/Services";
 import Contact from "./components/Pagess/Contact";
+import Footer from "./components/Footer/Footer";
 
 const App = () => {
   return (
@@ -20,6 +21,8 @@ const App = () => {
             <Route path="/contact" element={<Contact />} />
           </Routes>
         </div>
+        <Footer/>
+        
       </div>
     </Router>
   );

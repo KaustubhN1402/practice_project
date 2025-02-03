@@ -13,7 +13,7 @@ const Navbar = () => {
         <div className="container flex justify-between items-center py-4">
           {/* Leftmost - Logo Section */}
           <div className="text-2xl flex items-center gap-2 font-bold">
-          <GiFarmer />
+          <GiFarmer/>
             <p>Agri</p>
             <p className="text-secondary">Tech</p>
           </div>
