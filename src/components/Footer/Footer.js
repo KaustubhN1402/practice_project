@@ -11,8 +11,8 @@ const Footer = () => {
         {/* Logo and About Section */}
         <div className="text-center md:text-left">
           <div className="flex justify-center md:justify-start items-center gap-2">
-            <GiFarmer className="text-primary text-7xl " />
-            <h2 className="text-2xl font-semibold">Agri Tech</h2>
+            <GiFarmer className="text-primary text-5xl " />
+            <h2 className="text-2xl font-semibold">AgriTech</h2>
           </div>
           <p className="mt-2 text-gray-400">
             Innovative agricultural solutions for a sustainable future.

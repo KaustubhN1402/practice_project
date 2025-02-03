@@ -18,7 +18,7 @@ const Contact = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // For now, just log the form data. You can implement backend integration later.
+    // We have just logged the form data, implement backend integration later.
     console.log("Form submitted:", formData);
   };
 
