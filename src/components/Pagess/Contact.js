@@ -1,5 +1,7 @@
-import React, { useState } from "react";
-//import { GiFarmer } from "react-icons/gi";
+import React, { useState, useEffect } from "react";
+import { auth, db } from "../../firebase";
+import { collection, addDoc, serverTimestamp } from "firebase/firestore";
+import { onAuthStateChanged } from "firebase/auth";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -7,6 +9,14 @@ const Contact = () => {
     email: "",
     message: "",
   });
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -16,48 +26,43 @@ const Contact = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // We have just logged the form data, implement backend integration later.
-    console.log("Form submitted:", formData);
+    if (!user) {
+      alert("You need to be logged in to submit the form.");
+      return;
+    }
+
+    try {
+      await addDoc(collection(db, "messages"), {
+        name: formData.name,
+        email: formData.email,
+        message: formData.message,
+        userId: user.uid,
+        timestamp: serverTimestamp(), // Server-generated timestamp
+      });
+      alert("Message sent successfully!");
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      console.error("Error adding document: ", error);
+      alert("Error sending message. Try again later.");
+    }
   };
 
   return (
     <div className="contact-container bg-gray-100 py-20">
-      {/* Contact Header */}
       <section className="contact-header text-center px-4">
-        <h1 className="text-4xl font-bold text-primary">
-          Get in Touch with Agri Tech
-        </h1>
+        <p className="text-4xl font-bold text-black">Get in Touch with</p>
+        <p className="text-4xl font-bold text-primary">AgriTech</p>
+        <br />
         <p className="mt-4 text-lg text-gray-700">
           Have questions or want to learn more about our Agri Tech solutions?
           Reach out to us!
         </p>
       </section>
 
-      {/* Contact Details */}
-      <section className="contact-details mt-16 text-center">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-10 px-4">
-          <div className="contact-item bg-white p-6 shadow-md rounded-lg">
-            <h3 className="text-xl font-semibold">Email</h3>
-            <p className="text-gray-600">ad.naik@gmail.com</p>
-          </div>
-          <div className="contact-item bg-white p-6 shadow-md rounded-lg">
-            <h3 className="text-xl font-semibold">Phone</h3>
-            <p className="text-gray-600">+91 989 064 0373</p>
-          </div>
-          <div className="contact-item bg-white p-6 shadow-md rounded-lg">
-            <h3 className="text-xl font-semibold">Location</h3>
-            <p className="text-gray-600">Pune Institute of Computer Technology, Pune</p>
-          </div>
-        </div>
-      </section>
-
-      {/* Contact Form */}
       <section className="contact-form mt-20 max-w-4xl mx-auto px-4">
-        <h2 className="text-3xl font-semibold text-center">
-          Send Us a Message
-        </h2>
+        <h2 className="text-3xl font-semibold text-center">Send Us a Message</h2>
         <form
           onSubmit={handleSubmit}
           className="bg-white p-8 mt-8 rounded-lg shadow-lg"
@@ -74,6 +79,7 @@ const Contact = () => {
               onChange={handleChange}
               className="w-full p-3 mt-1 border border-gray-300 rounded-md"
               placeholder="Enter your name"
+              required
             />
           </div>
           <div className="mb-4">
@@ -88,6 +94,7 @@ const Contact = () => {
               onChange={handleChange}
               className="w-full p-3 mt-1 border border-gray-300 rounded-md"
               placeholder="Enter your email"
+              required
             />
           </div>
           <div className="mb-4">
@@ -102,11 +109,13 @@ const Contact = () => {
               className="w-full p-3 mt-1 border border-gray-300 rounded-md"
               rows="5"
               placeholder="Your message here"
+              required
             />
           </div>
           <button
             type="submit"
             className="w-full bg-primary text-white py-3 rounded-md mt-4 hover:bg-secondary"
+            
           >
             Submit
           </button>
