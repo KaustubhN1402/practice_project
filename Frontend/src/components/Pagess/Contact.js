@@ -10,6 +10,7 @@ const Contact = () => {
     message: "",
   });
   const [user, setUser] = useState(null);
+  
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {

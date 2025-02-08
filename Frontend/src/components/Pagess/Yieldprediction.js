@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
+//import axios from "axios";
 import { predict } from "../../API/YieldPredictApi";
 import { auth } from "../../firebase"; // Ensure auth is correctly imported
 
@@ -54,19 +54,88 @@ function Yieldprediction() {
   };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h2>Crop Yield Prediction</h2>
-      <form onSubmit={handleSubmit}>
-        <input type="number" name="Soil_Temp" placeholder="Soil Temperature" value={formData.Soil_Temp} onChange={handleChange} required />
-        <input type="number" name="N" placeholder="Nitrogen (N)" value={formData.N} onChange={handleChange} required />
-        <input type="number" name="P" placeholder="Phosphorus (P)" value={formData.P} onChange={handleChange} required />
-        <input type="number" name="K" placeholder="Potassium (K)" value={formData.K} onChange={handleChange} required />
-        <input type="number" name="Moisture" placeholder="Soil Moisture" value={formData.Moisture} onChange={handleChange} required />
-        <input type="number" name="Humidity" placeholder="Air Humidity" value={formData.Humidity} onChange={handleChange} required />
-        <input type="number" name="Air_Temp" placeholder="Air Temperature" value={formData.Air_Temp} onChange={handleChange} required />
-        <button type="submit">Predict</button>
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 py-12 px-4">
+      <h2 className="text-4xl font-semibold text-center text-gray-800 mb-8">Crop Yield Prediction</h2>
+      <form onSubmit={handleSubmit} className="bg-white p-8 shadow-lg rounded-lg w-full max-w-lg">
+        <div className="space-y-4">
+          <input
+            type="number"
+            name="Soil_Temp"
+            placeholder="Soil Temperature (°C)"
+            value={formData.Soil_Temp}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-300 rounded-md"
+          />
+          <input
+            type="number"
+            name="N"
+            placeholder="Nitrogen (N)"
+            value={formData.N}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-300 rounded-md"
+          />
+          <input
+            type="number"
+            name="P"
+            placeholder="Phosphorus (P)"
+            value={formData.P}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-300 rounded-md"
+          />
+          <input
+            type="number"
+            name="K"
+            placeholder="Potassium (K)"
+            value={formData.K}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-300 rounded-md"
+          />
+          <input
+            type="number"
+            name="Moisture"
+            placeholder="Soil Moisture (%)"
+            value={formData.Moisture}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-300 rounded-md"
+          />
+          <input
+            type="number"
+            name="Humidity"
+            placeholder="Air Humidity (%)"
+            value={formData.Humidity}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-300 rounded-md"
+          />
+          <input
+            type="number"
+            name="Air_Temp"
+            placeholder="Air Temperature (°C)"
+            value={formData.Air_Temp}
+            onChange={handleChange}
+            required
+            className="w-full p-3 border border-gray-300 rounded-md"
+          />
+        </div>
+        <button
+          type="submit"
+          className="w-full mt-6 bg-primary text-white py-3 rounded-md hover:bg-secondary focus:outline-none"
+        >
+          Predict
+        </button>
       </form>
-      {prediction !== null && <h3>Predicted Yield: {prediction}</h3>}
+      {prediction !== null && (
+        <div className="mt-6 bg-white p-4 shadow-lg rounded-md w-full max-w-lg">
+          <h3 className="text-xl font-semibold text-center text-gray-800">
+            Predicted Yield: <span className="text-primary">{prediction}</span>
+          </h3>
+        </div>
+      )}
     </div>
   );
 }
