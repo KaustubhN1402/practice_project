@@ -8,6 +8,7 @@ import Contact from "./components/Pagess/Contact";
 import Footer from "./components/Footer/Footer";
 import Login from "./components/Pagess/Login";
 import Signup from "./components/Pagess/Signup";
+import Yieldprediction from "./components/Pagess/Yieldprediction";
 
 const App = () => {
   return (
@@ -23,6 +24,7 @@ const App = () => {
             <Route path="/contact" element={<Contact />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/Signup" element={<Signup />} />
+            <Route path="/Yieldprediction" element={<Yieldprediction />} />
           </Routes>
         </div>
         <Footer/>

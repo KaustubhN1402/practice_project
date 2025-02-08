@@ -2,13 +2,14 @@ import React from "react"
 import disease from "../../Images/disease2.jpg"
 import recommend from "../../Images/recommend.jpg"
 import pred2 from "../../Images/pred2.jpg"
+import Yieldprediction from "./Yieldprediction"
 const services = [
   {
     id: 1,
     title: "Crop Prediction",
     description: "Utilize AI and IoT to optimize crop growth and yield.",
     image: pred2,
-    link: "/precision-farming",
+    link: "./Yieldprediction",
   },
   {
     id: 2,
