@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { GiFarmer } from "react-icons/gi";
 import { MdMenu, MdClose } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 
@@ -9,13 +9,19 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();  // Initialize navigate
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setIsLoggedIn(!!user);
+      if (user) {
+        setIsLoggedIn(true);
+        navigate("/"); // Redirect to homepage after login
+      } else {
+        setIsLoggedIn(false);
+      }
     });
     return () => unsubscribe();
-  }, []);
+  }, [navigate]); // Make sure navigate is included in the dependencies array
 
   const handleLogout = () => {
     setLoading(true);
@@ -24,6 +30,7 @@ const Navbar = () => {
         setTimeout(() => {
           setIsLoggedIn(false);
           setLoading(false);
+          navigate("/");  // Redirect to home after logout
         }, 3000);
       })
       .catch((error) => {
