@@ -20,7 +20,7 @@ const services = [
     title: "Crop Recommendation",
     description: "Get accurate insights into soil health and nutrient levels.",
     image: recommend,
-    link: "/soil-analysis",
+    link: "/CropRecommendation",
   },
   {
     id: 3,
