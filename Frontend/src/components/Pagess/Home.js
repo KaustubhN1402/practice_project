@@ -1,6 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { GiFarmTractor } from "react-icons/gi";
+//import { GiFarmTractor } from "react-icons/gi";
+import { GiFarmer } from "react-icons/gi";
+
 import { FaLeaf, FaSeedling, FaSolarPanel, FaSearch } from "react-icons/fa";
 import farmImage from "../../Images/farm__.jpg";
 //import analysisImage from "../../Images/analysis.jpg";
@@ -11,11 +13,11 @@ const Home = () => {
     <div className="bg-gray-100 min-h-screen">
       {/* Hero Section */}
       <section
-        className="relative text-center text-white py-32 px-8 md:px-12"
+        className="relative text-center text-white py-32 px-10 md:px-12"
         style={{ background: `url(${farmImage}) center/cover no-repeat` }}
       >
         <div className="bg-black bg-opacity-50 p-8 rounded-lg inline-block">
-          <GiFarmTractor className="text-primary text-7xl mx-auto mb-4" />
+          <GiFarmer className="text-primary text-7xl mx-auto mb-4" />
           <h1 className="text-5xl font-bold">Welcome to AgriTech</h1>
           <p className="text-lg mt-4 max-w-2xl mx-auto">
             Empowering farmers with cutting-edge technology to optimize agriculture.
@@ -56,7 +58,7 @@ const Home = () => {
       </section>
 
       {/* Featured Image Section */}
-      <section className="py-16 px-6 md:px-12 bg-gray-100">
+      <section className="py-16 px-6 md:px-12 bg-gray-150">
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
           <img src={farmImage} alt="Soil Analysis" className="w-full rounded-lg shadow-lg" />
           <div>
