@@ -10,13 +10,14 @@ import Login from "./components/Pagess/Login";
 import Signup from "./components/Pagess/Signup";
 import Yieldprediction from "./components/Pagess/Yieldprediction";
 
+
 const App = () => {
   return (
     <Router>
       <div className="overflow-x-hidden">
         <Navbar />
 
-        <div className="container mx-auto mt-10">
+        <div className="container mx-auto mt-20">
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/about" element={<About />} />

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { GiFarmer } from "react-icons/gi";
 import { MdMenu, MdClose } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
+import { Link, useNavigate } from "react-router-dom"; 
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../../firebase";
 
@@ -9,19 +9,22 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();  // Initialize navigate
+  const navigate = useNavigate();
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
         setIsLoggedIn(true);
-        navigate("/"); // Redirect to homepage after login
+        if (window.location.pathname === "/login" || window.location.pathname === "/signup") {
+          navigate("/"); // Redirect only if the user was on login or signup
+        }
       } else {
         setIsLoggedIn(false);
       }
     });
+
     return () => unsubscribe();
-  }, [navigate]); // Make sure navigate is included in the dependencies array
+  }, [navigate]);
 
   const handleLogout = () => {
     setLoading(true);
@@ -30,7 +33,7 @@ const Navbar = () => {
         setTimeout(() => {
           setIsLoggedIn(false);
           setLoading(false);
-          navigate("/");  // Redirect to home after logout
+          navigate("/"); 
         }, 3000);
       })
       .catch((error) => {
@@ -49,7 +52,7 @@ const Navbar = () => {
   }
 
   return (
-    <nav className="fixed top-0 left-0 w-full bg-gray-900 shadow-md z-50">
+    <nav className="fixed top-0 left-0 w-full bg-gray-900 shadow-md z-50 ">
       <div className="container flex justify-between items-center py-4 px-6 md:px-10">
         <div className="text-2xl flex items-center gap-2 font-bold">
           <GiFarmer className="text-primary text-5xl" />
@@ -85,7 +88,7 @@ const Navbar = () => {
           {isLoggedIn ? (
             <>
               <Link to="/profile">
-                <button className="text-white font-semibold px-6 py-2">
+                <button className="hover:bg-primary text-white font-semibold border-2 border-white px-6 py-2">
                   Profile
                 </button>
               </Link>

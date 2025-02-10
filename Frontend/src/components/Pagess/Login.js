@@ -29,7 +29,7 @@ const Login = () => {
 
     try {
       await signInWithEmailAndPassword(auth, email, password); // Login using Firebase
-      navigate("/dashboard"); // Redirect to dashboard after login
+      navigate("/"); // Redirect to home after login
     } catch (err) {
       setError("Invalid email or password. Please try again."); // Show error message
     }
@@ -38,7 +38,7 @@ const Login = () => {
   const handleLogout = async () => {
     try {
       await signOut(auth); // Firebase logout
-      navigate("/login"); // Redirect to login page after logout
+      navigate("/"); // Redirect to home page after logout
     } catch (err) {
       console.error("Error signing out: ", err); // Handle any errors
     }
