@@ -1,160 +1,72 @@
-import React, { useEffect, useState } from "react";
-import Plot from "react-plotly.js";
-import Papa from "papaparse";
-import { XCircleIcon } from "@heroicons/react/24/solid"; // for alert icon
+import React from 'react';
 
 const Visualization = () => {
-  const [data, setData] = useState([]);
-  const [selectedCrop, setSelectedCrop] = useState("all");
-  const [crops, setCrops] = useState([]);
-  const [showMessage, setShowMessage] = useState(false); // Alert message state
-
-  useEffect(() => {
-    fetch("/Data_Files/all_crops_data.csv")
-      .then((response) => response.text())
-      .then((csvData) => {
-        let parsedData = Papa.parse(csvData, { header: true }).data;
-        console.log(parsedData);
-
-        if (parsedData && parsedData.length > 0) {
-          setData(parsedData);
-          setCrops(["all", ...new Set(parsedData.map((row) => row.label))]);
-        } else {
-          console.error("Error: CSV data is empty or malformed");
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching CSV data: ", error);
-      });
-  }, []);
-
-  const filteredData = selectedCrop === "all" ? data : data.filter((row) => row.label === selectedCrop);
-
-  const nValues = filteredData.map((row) => parseFloat(row.N) || 0);
-  const pValues = filteredData.map((row) => parseFloat(row.P) || 0);
-  const kValues = filteredData.map((row) => parseFloat(row.K) || 0);
-  const tempValues = filteredData.map((row) => parseFloat(row.temperature) || 0);
-  const humidityValues = filteredData.map((row) => parseFloat(row.humidity) || 0);
-
-  const handleCropSelect = (event) => {
-    setSelectedCrop(event.target.value);
-    if (!event.target.value) {
-      setShowMessage(true);
-      setTimeout(() => setShowMessage(false), 4000);
-    }
-  };
-
   return (
-    <div className="visualization-container bg-gray-100 py-8 px-4 sm:px-6 lg:px-8">
-      <h2 className="text-3xl sm:text-4xl font-bold text-center text-primary mb-8">Crop Data Visualization</h2>
+    <div className="text-center p-6 bg-gray-100 min-h-screen py-14">
+      <h1 className="text-4xl font-bold text-gray-800 mb-4 text-primary">Data Visualization and Insights</h1>
+      <p className="text-gray-600 mb-8">Below are the charts showing data for multiple parameters obtained from sensors</p>
 
-      {/* Alert message */}
-      {showMessage && (
-        <div className="flex items-center justify-between bg-red-100 text-red-800 border border-red-300 px-4 py-3 rounded-md shadow-md max-w-md mx-auto mb-6">
-          <div className="flex items-center">
-            <XCircleIcon className="h-5 w-5 mr-2 text-red-500" />
-            <span>You need to select a crop to visualize the data.</span>
-          </div>
-          <button onClick={() => setShowMessage(false)} className="text-red-500 hover:text-red-700">
-            ✖
-          </button>
+      {/* Grid with two charts per row on larger screens */}
+      <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-2 gap-6">
+        {/* ThingSpeak Chart 1 */}
+        <div className="bg-white p-4 rounded-lg shadow-md w-full">
+          <iframe
+            className="w-full h-[300px] rounded-lg"
+            src="https://thingspeak.com/channels/2693814/charts/2?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=200&type=line"
+            title="ThingSpeak Chart 1"
+          ></iframe>
         </div>
-      )}
 
-      {/* Crop selection dropdown */}
-      <div className="mb-6 flex justify-center">
-        <label className="mr-4 text-lg text-secondary">Select Crop:</label>
-        <select
-          value={selectedCrop}
-          onChange={handleCropSelect}
-          className="px-4 py-2 border rounded-lg bg-white shadow-md focus:ring-2 focus:ring-primary focus:outline-none text-gray-700 text-base sm:text-lg"
-        >
-          {crops.map((crop, index) => (
-            <option key={index} value={crop}>
-              {crop}
-            </option>
-          ))}
-        </select>
-      </div>
+        {/* ThingSpeak Chart 2 */}
+        <div className="bg-white p-4 rounded-lg shadow-md w-full">
+          <iframe
+            className="w-full h-[300px] rounded-lg"
+            src="https://thingspeak.com/channels/2693814/charts/3?bgcolor=%23ffffff&color=%23006b6b&dynamic=true&results=200&type=line"
+            title="ThingSpeak Chart 2"
+          ></iframe>
+        </div>
 
-      {/* NPK Bar Chart */}
-      <div className="mb-12 bg-white p-6 rounded-lg shadow-lg">
-        <Plot
-          data={[
-            { x: filteredData.map((row) => row.label), y: nValues, type: "bar", name: "Nitrogen (N)", marker: { color: "#56B4E9" } },
-            { x: filteredData.map((row) => row.label), y: pValues, type: "bar", name: "Phosphorus (P)", marker: { color: "#fb923c" } },
-            { x: filteredData.map((row) => row.label), y: kValues, type: "bar", name: "Potassium (K)", marker: { color: "#eab308" } },
-          ]}
-          layout={{
-            title: {
-              text: "NPK Levels by Crop",
-              font: { size: 20 },
-              x: 0.5,
-              xanchor: "center",
-            },
-            barmode: "group",
-            xaxis: {
-              title: "Crop",
-              tickangle: -45,
-              tickmode: "array",
-              tickvals: filteredData.map((row) => row.label),
-              ticktext: filteredData.map((row) => row.label),
-              titlefont: { size: 16 },
-              tickfont: { size: 12 },
-            },
-            yaxis: {
-              title: "Concentration",
-              rangemode: "tozero",
-              titlefont: { size: 16 },
-              tickfont: { size: 12 },
-            },
-            paper_bgcolor: "#f9fafb",
-            plot_bgcolor: "#f9fafb",
-            font: { family: "Arial, sans-serif" },
-            margin: { t: 40, r: 40, b: 60, l: 40 },
-            autosize: true,
-          }}
-        />
-      </div>
+        {/* ThingSpeak Chart 3 */}
+        <div className="bg-white p-4 rounded-lg shadow-md w-full">
+          <iframe
+            className="w-full h-[300px] rounded-lg"
+            src="https://thingspeak.com/channels/2693814/charts/4?bgcolor=%23ffffff&color=%230066cc&dynamic=true&results=200&type=line"
+            title="ThingSpeak Chart 3"
+          ></iframe>
+        </div>
 
-      {/* Temperature vs Humidity Scatter Plot */}
-      <div className="bg-white p-6 rounded-lg shadow-lg">
-        <Plot
-          data={[
-            {
-              x: tempValues,
-              y: humidityValues,
-              mode: "markers",
-              marker: { size: 12, color: "#2563eb", opacity: 0.8, line: { width: 2, color: "black" } },
-              name: "Temp vs Humidity",
-            },
-          ]}
-          layout={{
-            title: {
-              text: "Temperature vs Humidity",
-              font: { size: 20 },
-              x: 0.5,
-              xanchor: "center",
-            },
-            xaxis: {
-              title: "Temperature (°C)",
-              gridcolor: "#e5e7eb",
-              titlefont: { size: 16 },
-              tickfont: { size: 12 },
-            },
-            yaxis: {
-              title: "Humidity (%)",
-              gridcolor: "#e5e7eb",
-              titlefont: { size: 16 },
-              tickfont: { size: 12 },
-            },
-            paper_bgcolor: "#f9fafb",
-            plot_bgcolor: "#f9fafb",
-            font: { family: "Arial, sans-serif" },
-            margin: { t: 40, r: 40, b: 60, l: 40 },
-            autosize: true,
-          }}
-        />
+        {/* ThingSpeak Chart 4 */}
+        <div className="bg-white p-4 rounded-lg shadow-md w-full">
+          <iframe
+            className="w-full h-[300px] rounded-lg"
+            src="https://thingspeak.com/channels/2693814/charts/5?bgcolor=%23ffffff&color=%23d6d600&dynamic=true&results=200&type=line"
+            title="ThingSpeak Chart 4"
+          ></iframe>
+        </div>
+
+        <div className="bg-white p-4 rounded-lg shadow-md w-full">
+          <iframe
+            className="w-full h-[300px] rounded-lg"
+            src="https://thingspeak.com/channels/2693814/charts/6?bgcolor=%23ffffff&color=%237f8c8d&dynamic=true&results=200&type=line"
+            title="ThingSpeak Chart 4"
+          ></iframe>
+        </div>
+
+        <div className="bg-white p-4 rounded-lg shadow-md w-full">
+          <iframe
+            className="w-full h-[300px] rounded-lg"
+            src="https://thingspeak.com/channels/2693814/charts/7?bgcolor=%23ffffff&color=%239b59b6&dynamic=true&results=200&type=line"
+            title="ThingSpeak Chart 4"
+          ></iframe>
+        </div>
+
+        <div className="bg-white p-4 rounded-lg shadow-md w-full">
+          <iframe
+            className="w-full h-[300px] rounded-lg"
+            src="https://thingspeak.com/channels/2693814/charts/8?bgcolor=%23ffffff&color=%23f39c12&dynamic=true&results=200&type=line"
+            title="ThingSpeak Chart 4"
+          ></iframe>
+        </div>
       </div>
     </div>
   );

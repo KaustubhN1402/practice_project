@@ -4,6 +4,7 @@ import { auth } from "../../firebase"; // Ensure auth is correctly imported
 import disease from "../../Images/disease2.jpg";
 import recommend from "../../Images/recommend.jpg";
 import pred2 from "../../Images/pred2.jpg";
+import insights from "../../Images/insights.webp";
 import { XCircleIcon } from "@heroicons/react/24/solid";
 import { onAuthStateChanged } from "firebase/auth"; // Import firebase auth function
 
@@ -33,7 +34,7 @@ const services = [
     id: 4,
     title: "Visual Insights",
     description: "Stay updated with the latest agricultural market trends.",
-    image: disease,
+    image: insights,
     link: "/Visualization",
   },
 ];
