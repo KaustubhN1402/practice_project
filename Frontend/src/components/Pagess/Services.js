@@ -29,6 +29,13 @@ const services = [
     image: disease,
     link: "/market-trends",
   },
+  {
+    id: 4,
+    title: "Visual Insights",
+    description: "Stay updated with the latest agricultural market trends.",
+    image: disease,
+    link: "/Visualization",
+  },
 ];
 
 const Services = () => {

@@ -10,6 +10,7 @@ import Login from "./components/Pagess/Login";
 import Signup from "./components/Pagess/Signup";
 import Yieldprediction from "./components/Pagess/Yieldprediction";
 import CropRecommendation from "./components/Pagess/CropRecommendation";
+import Visualization from "./components/Pagess/Visualization";
 
 
 const App = () => {
@@ -28,6 +29,7 @@ const App = () => {
             <Route path="/Signup" element={<Signup />} />
             <Route path="/Yieldprediction" element={<Yieldprediction />} />
             <Route path="/CropRecommendation" element={<CropRecommendation />} />
+            <Route path="/Visualization" element={<Visualization />} />
           </Routes>
         </div>
         <Footer/>
