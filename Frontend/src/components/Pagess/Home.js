@@ -5,6 +5,8 @@ import { GiFarmer } from "react-icons/gi";
 
 import { FaLeaf, FaSeedling, FaSolarPanel, FaSearch } from "react-icons/fa";
 import farmImage from "../../Images/farm__.jpg";
+import solar from "../../Images/solar.jpg" ; 
+import soil_analysis from "../../Images/soil_analysis.jpg" ; 
 //import analysisImage from "../../Images/analysis.jpg";
 //import energyImage from "../../Images/clean-energy.jpg";
 
@@ -60,7 +62,7 @@ const Home = () => {
       {/* Featured Image Section */}
       <section className="py-16 px-6 md:px-12 bg-gray-150">
         <div className="max-w-5xl mx-auto grid md:grid-cols-2 gap-10 items-center">
-          <img src={farmImage} alt="Soil Analysis" className="w-full rounded-lg shadow-lg" />
+          <img src={soil_analysis} alt="Soil Analysis" className="w-full rounded-lg shadow-lg" />
           <div>
             <h3 className="text-3xl font-bold text-gray-800">Advanced Soil Analysis</h3>
             <p className="mt-4 text-gray-700">
@@ -75,10 +77,10 @@ const Home = () => {
           <div>
             <h3 className="text-3xl font-bold text-gray-800">Renewable Energy Integration</h3>
             <p className="mt-4 text-gray-700">
-              Power your farms with clean, renewable energy solutions tailored for agriculture.
+              We have powered our technology with clean, renewable solar energy solutions.
             </p>
           </div>
-          <img src={farmImage} alt="Clean Energy" className="w-full rounded-lg shadow-lg" />
+          <img src={solar} alt="Clean Energy" className="w-full rounded-lg shadow-lg" />
         </div>
       </section>
     </div>

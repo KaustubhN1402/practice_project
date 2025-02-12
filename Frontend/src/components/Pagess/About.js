@@ -8,7 +8,7 @@ const AboutUs = () => {
       <div className="text-center max-w-4xl">
         <h1 className="text-5xl font-extrabold text-primary">About Us</h1>
         <p className="text-lg text-gray-600 mt-4">
-          Empowering agriculture with AI-driven insights. We help farmers make informed decisions for better yield and sustainability.
+          Empowering agriculture with AI-driven insights and out Machine Learning models. We help farmers make informed decisions for better yield and sustainability.
         </p>
       </div>
 
@@ -58,7 +58,7 @@ const AboutUs = () => {
         <p className="text-gray-700 mt-2">Have questions? Want to collaborate? Reach out to us!</p>
         <p className="text-lg font-semibold text-primary mt-2">
           <FaEnvelope className="inline mr-2" />
-          contact@yourcompany.com
+          ad.naik@gmail.com
         </p>
       </div>
     </div>

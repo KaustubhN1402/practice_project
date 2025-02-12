@@ -53,8 +53,10 @@ const Contact = () => {
   return (
     <div className="contact-container bg-gray-100 py-20">
       <section className="contact-header text-center px-4">
-        <p className="text-4xl font-bold text-black">Get in Touch with</p>
-        <p className="text-4xl font-bold text-primary">AgriTech</p>
+        <p className="text-4xl font-bold text-black">Get in Touch with us at</p>
+        
+        <br />
+        <p className="text-6xl font-bold text-primary">AgriTech</p>
         <br />
         <p className="mt-4 text-lg text-gray-700">
           Have questions or want to learn more about our Agri Tech solutions?
