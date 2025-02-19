@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { GiFarmer } from "react-icons/gi";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../firebase"; // Ensure you have a firebase.js config file
+import { auth, db } from "../../firebase"; // Ensure firebase is configured
+import { collection, addDoc } from "firebase/firestore";
+import { doc, setDoc } from "firebase/firestore"; // Import Firestore methods
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -25,19 +27,28 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-
+  
     if (formData.password !== formData.confirmPassword) {
       setError("Passwords do not match!");
       return;
     }
-
+  
     setLoading(true);
     try {
-      await createUserWithEmailAndPassword(
+      const userCredential = await createUserWithEmailAndPassword(
         auth,
         formData.email,
         formData.password
       );
+      const user = userCredential.user;
+  
+      // Store user data in Firestore
+      await setDoc(doc(db, "users", user.uid), {
+        uid: user.uid,
+        name: formData.name,
+        email: formData.email,
+      });
+  
       navigate("/dashboard"); // Redirect after successful signup
     } catch (err) {
       setError(err.message);

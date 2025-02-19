@@ -11,6 +11,7 @@ import Signup from "./components/Pagess/Signup";
 import Yieldprediction from "./components/Pagess/Yieldprediction";
 import CropRecommendation from "./components/Pagess/CropRecommendation";
 import Visualization from "./components/Pagess/Visualization";
+import Profile from "./components/Pagess/Profile";
 
 
 const App = () => {
@@ -30,6 +31,7 @@ const App = () => {
             <Route path="/Yieldprediction" element={<Yieldprediction />} />
             <Route path="/CropRecommendation" element={<CropRecommendation />} />
             <Route path="/Visualization" element={<Visualization />} />
+            <Route path="/Profile" element={<Profile />} />
           </Routes>
         </div>
         <Footer/>
