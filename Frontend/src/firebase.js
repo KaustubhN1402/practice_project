@@ -11,7 +11,7 @@ import { getFirestore } from "firebase/firestore";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyC8I_0iG56O9XzcUdV2i7-zDcimQ7ktu84",
-  authDomain: "agritech-c7e39.firebaseapp.com",
+  authDomain: window.location.hostname,
   projectId: "agritech-c7e39",
   storageBucket: "agritech-c7e39.firebasestorage.app",
   messagingSenderId: "561647456016",
