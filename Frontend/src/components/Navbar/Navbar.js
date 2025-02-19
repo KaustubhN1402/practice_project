@@ -46,14 +46,14 @@ const Navbar = () => {
     return (
       <div className="fixed inset-0 flex flex-col items-center justify-center bg-gray-900 z-50">
         <div className="animate-spin rounded-full h-16 w-16 border-4 border-white border-t-transparent"></div>
-        <p className="text-white mt-4 text-lg">Redirecting...</p>
+        <p className="text-white mt-6 text-md">Logging Out....</p>
       </div>
     );
   }
 
   return (
     <nav className="fixed top-0 left-0 w-full bg-gray-900 shadow-md z-50 ">
-      <div className="container flex justify-between items-center py-4 px-6 md:px-10">
+      <div className="container flex justify-between items-center py-2 px-6 md:px-10">
         <div className="text-2xl flex items-center gap-2 font-bold">
           <GiFarmer className="text-primary text-5xl" />
           <p className="text-white">AgriTech</p>
@@ -88,13 +88,13 @@ const Navbar = () => {
           {isLoggedIn ? (
             <>
               <Link to="/profile">
-                <button className="hover:bg-primary text-white font-semibold border-2 border-white px-6 py-2">
+                <button className="hover:bg-primary text-white font-semibold border-2 border-white px-6 py-2 rounded-lg transition-transform transform hover:scale-105">
                   Profile
                 </button>
               </Link>
               <button
                 onClick={handleLogout}
-                className="hover:bg-primary text-white font-semibold border-2 border-white px-6 py-2"
+                className="hover:bg-primary text-white font-semibold border-2 border-white px-6 py-2 rounded-lg transition-transform transform hover:scale-105"
               >
                 Logout
               </button>
@@ -102,12 +102,12 @@ const Navbar = () => {
           ) : (
             <>
               <Link to="/login">
-                <button className="hover:bg-primary text-white font-semibold border-2 border-white px-6 py-2">
+                <button className="hover:bg-primary text-white font-semibold border-2 border-white px-6 py-2 rounded-lg transition-transform transform hover:scale-105">
                   Login
                 </button>
               </Link>
               <Link to="/signup">
-                <button className="hover:bg-primary text-white font-semibold border-2 border-white px-6 py-2">
+                <button className="hover:bg-primary text-white font-semibold border-2 border-white px-6 py-2 rounded-lg transition-transform transform hover:scale-105">
                   Signup
                 </button>
               </Link>

@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-900 text-white py-4 px-6">
-      
-      <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+    <footer className="bg-gray-900 text-white py-6 px-6">
+      <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 text-center md:text-left">
+        
         {/* Logo and About Section */}
-        <div className="text-center md:text-left">
+        <div>
           <div className="flex justify-center md:justify-start items-center gap-2">
-            <GiFarmer className="text-primary text-5xl " />
+            <GiFarmer className="text-primary text-5xl" />
             <h2 className="text-2xl font-semibold">AgriTech</h2>
           </div>
           <p className="mt-2 text-gray-400">
@@ -19,35 +19,27 @@ const Footer = () => {
           </p>
         </div>
 
-        {/* Navigation Links in 2x2 Grid */}
-        <div className="flex flex-col items-center gap-4">
-          <div className="grid grid-cols-2 gap-8 text-lg">
+        {/* Quick Links - Centered in Laptop View */}
+        <div className="md:flex md:flex-col md:items-center">
+          <h3 className="text-lg font-semibold text-primary">Quick Links</h3>
+          <div className="grid grid-cols-1 gap-2 text-lg mt-2">
             <Link to="/" className="hover:text-primary transition duration-300">
               Home
             </Link>
-            <Link
-              to="/about"
-              className="hover:text-primary transition duration-300"
-            >
+            <Link to="/about" className="hover:text-primary transition duration-300">
               About Us
             </Link>
-            <Link
-              to="/services"
-              className="hover:text-primary transition duration-300"
-            >
+            <Link to="/services" className="hover:text-primary transition duration-300">
               Services
             </Link>
-            <Link
-              to="/contact"
-              className="hover:text-primary transition duration-300"
-            >
+            <Link to="/contact" className="hover:text-primary transition duration-300">
               Contact
             </Link>
           </div>
         </div>
 
-        {/* Contact Info Section */}
-        <div className="text-center md:text-right">
+        {/* Contact Info - Right Aligned */}
+        <div className="md:text-right">
           <h3 className="text-lg font-semibold text-primary">Contact Us</h3>
           <p className="text-gray-400">Pune Institute of Computer Technology</p>
           <p className="text-gray-400">Email: ad.naik@gmail.com</p>
@@ -55,28 +47,16 @@ const Footer = () => {
 
           {/* Social Media Icons */}
           <div className="flex justify-center md:justify-end gap-4 mt-3">
-            <a
-              href="#"
-              className="text-gray-400 hover:text-primary text-2xl transition duration-300"
-            >
+            <a href="#" className="text-gray-400 hover:text-primary text-2xl transition duration-300">
               <FaFacebook />
             </a>
-            <a
-              href="#"
-              className="text-gray-400 hover:text-primary text-2xl transition duration-300"
-            >
+            <a href="#" className="text-gray-400 hover:text-primary text-2xl transition duration-300">
               <FaTwitter />
             </a>
-            <a
-              href="#"
-              className="text-gray-400 hover:text-primary text-2xl transition duration-300"
-            >
+            <a href="#" className="text-gray-400 hover:text-primary text-2xl transition duration-300">
               <FaInstagram />
             </a>
-            <a
-              href="#"
-              className="text-gray-400 hover:text-primary text-2xl transition duration-300"
-            >
+            <a href="#" className="text-gray-400 hover:text-primary text-2xl transition duration-300">
               <FaLinkedin />
             </a>
           </div>

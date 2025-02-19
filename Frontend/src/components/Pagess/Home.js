@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { GiFarmer } from "react-icons/gi";
 
 import { FaLeaf, FaSeedling, FaSolarPanel, FaSearch } from "react-icons/fa";
-import farmImage from "../../Images/farm__.jpg";
+import farmImage from "../../Images/cover.JPG";
 import solar from "../../Images/solar.jpg" ; 
 import soil_analysis from "../../Images/soil_analysis.jpg" ; 
 //import analysisImage from "../../Images/analysis.jpg";
