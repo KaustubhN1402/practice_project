@@ -132,7 +132,7 @@ function Yieldprediction() {
       {prediction !== null && (
         <div className="mt-6 bg-white p-4 shadow-lg rounded-md w-full max-w-lg">
           <h3 className="text-xl font-semibold text-center text-gray-800">
-            Predicted Yield: <span className="text-primary">{prediction}</span>
+            Predicted Yield: <span className="text-primary">{prediction}</span> kgs/acre
           </h3>
         </div>
       )}
