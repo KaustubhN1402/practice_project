@@ -6,5 +6,4 @@ export const predict = async (data, token) => {
     return axios.post(`${API_URL}/predict_crop`, data, {
         headers: { Authorization: `Bearer ${token}` }
     });
-    
 };
