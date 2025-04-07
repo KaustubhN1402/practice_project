@@ -16,44 +16,44 @@ with open("yield_model.pkl", "rb") as f:
 with open("recommendation_model.pkl", "rb") as f:
     crop_model = pickle.load(f)  # Loading crop recommendation model
 
-# with open("disease_prediction_model.pkl", "rb") as f:
-#     disease_model = pickle.load(f)
+with open("disease_prediction_model.pkl", "rb") as f:
+    disease_model = pickle.load(f)
 
-# disease_model.eval()  # Set the model to evaluation mode
-# device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-# disease_model.to(device)
+disease_model.eval()  # Set the model to evaluation mode
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+disease_model.to(device)
 
-# def preprocess_image(image):
-#     preprocess = transforms.Compose([
-#         transforms.Resize((224, 224)),
-#         transforms.ToTensor(),
-#         transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
-#     ])
-#     input_tensor = preprocess(image).unsqueeze(0)
-#     input_tensor = input_tensor.to(device)  # Move to device (GPU if available)
-#     return input_tensor
+def preprocess_image(image):
+    preprocess = transforms.Compose([
+        transforms.Resize((224, 224)),
+        transforms.ToTensor(),
+        transforms.Normalize(mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
+    ])
+    input_tensor = preprocess(image).unsqueeze(0)
+    input_tensor = input_tensor.to(device)  # Move to device (GPU if available)
+    return input_tensor
 
-# # Class names (replace with your actual class names)
-# class_names = ['healthy', 'leaf curl', 'leaf spot', 'whitefly', 'yellowish']  
+# Class names (replace with your actual class names)
+class_names = ['healthy', 'leaf curl', 'leaf spot', 'whitefly', 'yellowish']  
 
-# @app.route('/predict_disease', methods=['POST'])
-# def predict():
-#     if 'file' not in request.files:
-#         return jsonify({'error': 'No file part'}), 400
+@app.route('/predict_disease', methods=['POST'])
+def predict():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part'}), 400
 
-#     file = request.files['file']
-#     image = Image.open(file.stream)
+    file = request.files['file']
+    image = Image.open(file.stream)
 
-#     input_tensor = preprocess_image(image)  # Call the preprocessing function
+    input_tensor = preprocess_image(image)  # Call the preprocessing function
 
-#     with torch.no_grad():
-#         outputs = disease_model(input_tensor).logits
-#         probabilities = torch.nn.functional.softmax(outputs, dim=1)
-#         confidence_score, predicted_class = torch.max(probabilities, 1)
+    with torch.no_grad():
+        outputs = disease_model(input_tensor).logits
+        probabilities = torch.nn.functional.softmax(outputs, dim=1)
+        confidence_score, predicted_class = torch.max(probabilities, 1)
 
-#     predicted_class_name = class_names[predicted_class.item()]
+    predicted_class_name = class_names[predicted_class.item()]
 
-#     return jsonify({'predicted_class': predicted_class_name, 'confidence_score': confidence_score.item()})
+    return jsonify({'predicted_class': predicted_class_name, 'confidence_score': confidence_score.item()})
 
 # Define feature names for crop recommendation model
 crop_feature_names = ['N', 'P', 'K', 'temperature', 'humidity']

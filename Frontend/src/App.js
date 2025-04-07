@@ -12,6 +12,7 @@ import Yieldprediction from "./components/Pagess/Yieldprediction";
 import CropRecommendation from "./components/Pagess/CropRecommendation";
 import Visualization from "./components/Pagess/Visualization";
 import Profile from "./components/Pagess/Profile";
+import DiseasePrediction from "./components/Pagess/DiseasePrediction";
 
 
 const App = () => {
@@ -32,6 +33,9 @@ const App = () => {
             <Route path="/CropRecommendation" element={<CropRecommendation />} />
             <Route path="/Visualization" element={<Visualization />} />
             <Route path="/Profile" element={<Profile />} />
+            <Route path="/DiseasePrediction" element={<DiseasePrediction />} />
+
+
           </Routes>
         </div>
         <Footer/>

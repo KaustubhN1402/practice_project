@@ -28,7 +28,7 @@ const services = [
     title: "Disease Prediction",
     description: "Identify the disease caught by the crops and get solutions accordingly.",
     image: disease,
-    link: "/market-trends",
+    link: "/DiseasePrediction",
   },
   {
     id: 4,
