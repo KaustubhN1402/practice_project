@@ -5,6 +5,7 @@ from flask_cors import CORS
 from PIL import Image
 import torch
 from torchvision import transforms
+from transformers import ViTForImageClassification
 
 app = Flask(__name__)
 CORS(app)
@@ -16,12 +17,14 @@ with open("yield_model.pkl", "rb") as f:
 with open("recommendation_model.pkl", "rb") as f:
     crop_model = pickle.load(f)  # Loading crop recommendation model
 
-with open("disease_prediction_model.pkl", "rb") as f:
-    disease_model = pickle.load(f)
-
-disease_model.eval()  # Set the model to evaluation mode
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+disease_model = ViTForImageClassification.from_pretrained(
+    'google/vit-base-patch16-224-in21k', 
+    num_labels=5
+)
+disease_model.load_state_dict(torch.load('disease_prediction_model_torch.pth', map_location=device))
 disease_model.to(device)
+disease_model.eval()
 
 def preprocess_image(image):
     preprocess = transforms.Compose([
@@ -103,3 +106,5 @@ def predict_crop():
 
 if __name__ == "__main__":
     app.run(port=5001, debug=True)
+
+# lets deployyyy
