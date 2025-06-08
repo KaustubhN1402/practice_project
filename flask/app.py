@@ -22,7 +22,7 @@ disease_model = ViTForImageClassification.from_pretrained(
     'google/vit-base-patch16-224-in21k', 
     num_labels=5
 )
-disease_model.load_state_dict(torch.load('disease_prediction_model_torch.pth', map_location=device))
+disease_model.load_state_dict(torch.load('disease_model.pth', map_location=device))
 disease_model.to(device)
 disease_model.eval()
 
