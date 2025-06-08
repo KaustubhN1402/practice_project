@@ -42,7 +42,7 @@ const Footer = () => {
         <div className="md:text-right">
           <h3 className="text-lg font-semibold text-primary">Contact Us</h3>
           <p className="text-gray-400">Pune Institute of Computer Technology</p>
-          <p className="text-gray-400">Email: ad.naik@gmail.com</p>
+          <p className="text-gray-400">Email: ad.naik0801@gmail.com</p>
           <p className="text-gray-400">Phone: +91 989 064 0373</p>
 
           {/* Social Media Icons */}

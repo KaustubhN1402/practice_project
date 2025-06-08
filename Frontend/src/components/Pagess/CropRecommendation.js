@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { auth } from "../../firebase"; // Ensure auth is correctly imported
-import { FaSeedling, FaAppleAlt, FaCarrot } from "react-icons/fa"; // You can replace these with actual crop icons
+import { auth } from "../../firebase";
+import { FaSeedling, FaAppleAlt, FaCarrot } from "react-icons/fa";
 
 function CropRecommendation() {
   const [formData, setFormData] = useState({
@@ -13,28 +13,31 @@ function CropRecommendation() {
 
   const [recommendation, setRecommendation] = useState(null);
   const [user, setUser] = useState(null);
+  const [error, setError] = useState("");
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
-      if (user) {
-        setUser(user); // Store user data if logged in
-      } else {
-        setUser(null); // Reset user data if logged out
-      }
+      setUser(user || null);
     });
-    return unsubscribe; // Clean up subscription on unmount
+    return unsubscribe;
   }, []);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
+    setError("");
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if user is logged in
     if (!user) {
-      console.error("User is not logged in.");
+      setError("You must be logged in to get recommendations.");
+      return;
+    }
+
+    const values = Object.values(formData);
+    if (values.some((val) => val === "")) {
+      setError("Please fill all the input fields before submitting.");
       return;
     }
 
@@ -53,104 +56,123 @@ function CropRecommendation() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(numericFormData),
       });
 
       if (!response.ok) {
-        throw new Error("Network response was not ok");
+        throw new Error("Failed to fetch crop prediction.");
       }
 
       const result = await response.json();
-      setRecommendation(result.predictions); // Assuming the result contains the crop recommendations
+      setRecommendation(result.predictions);
+      setError("");
     } catch (err) {
       console.error("Error:", err);
+      setError("Failed to get recommendation. Please try again.");
     }
+  };
+
+  const handleReset = () => {
+    setFormData({
+      N: "",
+      P: "",
+      K: "",
+      Temp: "",
+      Humidity: "",
+    });
+    setRecommendation(null);
+    setError("");
   };
 
   const renderCropIcon = (crop) => {
-    // Add custom icons for specific crops
-    switch (crop) {
-      case "Wheat":
+    switch (crop.toLowerCase()) {
+      case "wheat":
         return <FaSeedling className="text-2xl text-green-500" />;
-      case "Rice":
+      case "rice":
         return <FaAppleAlt className="text-2xl text-red-500" />;
-      case "Maize":
+      case "maize":
         return <FaCarrot className="text-2xl text-orange-500" />;
       default:
-        return null;
+        return <FaSeedling className="text-2xl text-gray-500" />;
     }
   };
 
+  const capitalize = (str) =>
+    str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gray-100 py-12 px-4">
-      <h2 className="text-4xl font-semibold text-center text-gray-800 mb-8">Crop Recommendation</h2>
-      <form onSubmit={handleSubmit} className="bg-white p-8 shadow-lg rounded-lg w-full max-w-lg">
-        <div className="space-y-4">
-          <input
-            type="number"
-            name="N"
-            placeholder="Nitrogen (N)"
-            value={formData.N}
-            onChange={handleChange}
-            required
-            className="w-full p-3 border border-gray-300 rounded-md"
-          />
-          <input
-            type="number"
-            name="P"
-            placeholder="Phosphorus (P)"
-            value={formData.P}
-            onChange={handleChange}
-            required
-            className="w-full p-3 border border-gray-300 rounded-md"
-          />
-          <input
-            type="number"
-            name="K"
-            placeholder="Potassium (K)"
-            value={formData.K}
-            onChange={handleChange}
-            required
-            className="w-full p-3 border border-gray-300 rounded-md"
-          />
-          <input
-            type="number"
-            name="Temp"
-            placeholder="Temperature (°C)"
-            value={formData.Temp}
-            onChange={handleChange}
-            required
-            className="w-full p-3 border border-gray-300 rounded-md"
-          />
-          <input
-            type="number"
-            name="Humidity"
-            placeholder="Humidity (%)"
-            value={formData.Humidity}
-            onChange={handleChange}
-            required
-            className="w-full p-3 border border-gray-300 rounded-md"
-          />
+      <h2 className="text-4xl font-semibold text-center text-gray-800 mb-8">
+        Crop Recommendation
+      </h2>
+
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white p-8 shadow-lg rounded-lg w-full max-w-lg space-y-4"
+      >
+        <div className="grid grid-cols-1 gap-4">
+          {["N", "P", "K", "Temp", "Humidity"].map((field) => (
+            <input
+              key={field}
+              type="number"
+              name={field}
+              placeholder={
+                field === "Temp"
+                  ? "Temperature (°C)"
+                  : field === "Humidity"
+                  ? "Humidity (%)"
+                  : `${field} value`
+              }
+              value={formData[field]}
+              onChange={handleChange}
+              required
+              className="w-full p-3 border border-gray-300 rounded-md"
+            />
+          ))}
         </div>
-        <button
-          type="submit"
-          className="w-full mt-6 bg-primary text-white py-3 rounded-md hover:bg-secondary focus:outline-none"
-        >
-          Get Recommendation
-        </button>
+
+        {error && <div className="text-red-500 text-sm">{error}</div>}
+
+        <div className="flex items-center justify-between mt-6 space-x-4">
+          <button
+            type="submit"
+            className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded-md shadow"
+          >
+            Get Recommendation
+          </button>
+          <button
+            type="button"
+            onClick={handleReset}
+            className="flex-1 bg-green-600 hover:bg-green-700 text-white py-3 rounded-md shadow"
+          >
+            Reset
+          </button>
+        </div>
       </form>
 
       {recommendation && (
-        <div className="mt-6 bg-white p-4 shadow-lg rounded-md w-full max-w-lg">
-          <h3 className="text-xl font-semibold text-center text-gray-800">Recommendation:</h3>
-          {recommendation.map((item, index) => (
-            <div key={index} className="flex items-center space-x-4 text-center mb-3">
-              {renderCropIcon(item.crop)} {/* Render crop icon */}
-              <p className="text-lg font-semibold">{item.crop}: {item.probability.toFixed(2)}%</p>
-            </div>
-          ))}
+        <div className="mt-8 bg-white p-6 shadow-md rounded-md w-full max-w-lg">
+          <h3 className="text-xl font-semibold text-gray-800 mb-4">
+            Based on your input values, we recommend the following crops:
+          </h3>
+          <div className="space-y-3">
+            {recommendation.map((item, index) => (
+              <div
+                key={index}
+                className="flex items-center justify-start space-x-4 border p-3 rounded-md shadow-sm"
+              >
+                {renderCropIcon(item.crop)}
+                <p className="text-lg font-medium text-gray-700">
+                  {capitalize(item.crop)} –{" "}
+                  <span className="font-semibold text-blue-600">
+                    {item.probability.toFixed(2)}%
+                  </span>
+                </p>
+              </div>
+            ))}
+          </div>
         </div>
       )}
     </div>

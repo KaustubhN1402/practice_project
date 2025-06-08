@@ -51,12 +51,11 @@ def predict():
 
     with torch.no_grad():
         outputs = disease_model(input_tensor).logits
-        probabilities = torch.nn.functional.softmax(outputs, dim=1)
-        confidence_score, predicted_class = torch.max(probabilities, 1)
+        predicted_class = torch.argmax(outputs, dim=1)
 
     predicted_class_name = class_names[predicted_class.item()]
 
-    return jsonify({'predicted_class': predicted_class_name, 'confidence_score': confidence_score.item()})
+    return jsonify({'predicted_class': predicted_class_name})
 
 # Define feature names for crop recommendation model
 crop_feature_names = ['N', 'P', 'K', 'temperature', 'humidity']
